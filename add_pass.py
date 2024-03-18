@@ -8,18 +8,24 @@ with open("keys/public.pem", "rb") as f:
 with open("keys/private.pem", "rb") as f:
     private_key = rsa.PrivateKey.load_pkcs1(f.read())
 
+with open("keys/user_id.txt", "r") as f:
+    user_id = f.read()
+
 password = input("Enter password: ")
+pass_name = input("Enter pass name: ")
 
 encrypted_password = rsa.encrypt(password.encode(), public_key)
 
 # Creates a password file
-with open("password.txt", "wb") as f:
+address = "{}-{}.txt".format(user_id, pass_name)
+
+with open(address, "wb") as f:
     f.write(encrypted_password)
     f.close()
 
 # Sends encrypted password to the server
 with pysftp.Connection('ilovemyholly.ddns.net', username='pass_man', password='6arleyhuman') as sftp:
     with sftp.cd('passwords'):
-        sftp.put('password.txt')
+        sftp.put(address)
 
-os.remove("password.txt")
+os.remove(address)
