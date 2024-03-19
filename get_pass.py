@@ -16,9 +16,14 @@ pass_name = input("Enter pass name: ")
 address = "{}-{}.txt".format(user_id, pass_name)
 
 # Gets encrypted password from the server
-with pysftp.Connection('ilovemyholly.ddns.net', username='pass_man', password='6arleyhuman') as sftp:
-    with sftp.cd('passwords'):
-        sftp.get(address)
+try:
+    with pysftp.Connection('ilovemyholly.ddns.net', username='pass_man', password='6arleyhuman') as sftp:
+        with sftp.cd('passwords'):
+            sftp.get(address)
+except:
+    print("Password with name {} not found".format(pass_name))
+    os.remove(address)
+    exit()
 
 with open(address, "rb") as f:
     encrypted_password = f.read()

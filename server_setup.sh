@@ -2,6 +2,12 @@
 
 # Script that creates a sftp only group and adds the user pass_man to it
 
+# Check if run as root, else exit
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
+
 groupadd sftponly
 useradd -g sftponly -s /bin/false -m -d /home/pass_man pass_man
 
