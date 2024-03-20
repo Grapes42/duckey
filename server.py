@@ -7,16 +7,19 @@ class Server:
         self.connection = pysftp.Connection(address, username=username, password=password)
         self.ids = []
 
+    # Put file in server
     def put(self, path):
         with self.connection as sftp:
             with sftp.cd("passwords"):
                 sftp.put(path)
 
+    # Get file from server
     def get(self, path):
         with self.connection as sftp:
                 with sftp.cd("passwords"):
                     sftp.get(path)
 
+    # Add a encrypted password in the server
     def add_pass(self, id, public_key):
         pass_name = input("Enter password name: ")
         password = input("Enter password: ")
@@ -33,6 +36,7 @@ class Server:
 
         os.remove(path)
 
+    # Return and decrypt a password from the server
     def get_pass(self, id, private_key):
         pass_name = input("Enter pass name: ")
         path = "{}-{}.txt".format(id, pass_name)
@@ -52,6 +56,7 @@ class Server:
 
         os.remove(path)
 
+    # List all IDs in the server
     def get_ids(self):
         with self.connection as sftp:
             with sftp.cd("passwords"):

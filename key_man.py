@@ -19,14 +19,16 @@ class Key_man:
 
         self.local_ids = []
 
+        # If there is an empty or invalid key structure, backup and generate keys
         if (not os.path.exists("{}/id.txt".format(keys_dir)) 
-            and not os.path.exists("{}/public.txt".format(keys_dir)) 
-            and not os.path.exists("{}/private.txt".format(keys_dir))
+            or not os.path.exists("{}/public.txt".format(keys_dir)) 
+            or not os.path.exists("{}/private.txt".format(keys_dir))
             ):
             self.generate()
             time.sleep(1)
             self.backup()
 
+    # Gets the information from all the keys and puts them in variables
     def get_keys(self):
         with open(self.id_path, "r") as f:
             self.id = f.read()
@@ -37,13 +39,7 @@ class Key_man:
         with open(self.private_key_path, "r") as f:
             self.private_key = rsa.PrivateKey.load_pkcs1(f.read())
 
-    def list_ids(self):
-        id_list = os.listdir("backup_keys")
-        id_list.sort()
-
-
-
-
+    # Generates new keys
     def generate(self):
         if not os.path.exists(self.keys_dir):
             os.makedirs(self.keys_dir)
@@ -53,16 +49,20 @@ class Key_man:
 
         with open(self.id_path, "w") as f:
             f.write(generated_id)
+            f.close
 
         # Generates a private and public key
         generated_public_key, generated_private_key = rsa.newkeys(1024)
 
         with open(self.public_key_path, "wb") as f:
             f.write(generated_public_key.save_pkcs1("PEM"))
+            f.close()
 
         with open(self.private_key_path, "wb") as f:
             f.write(generated_private_key.save_pkcs1("PEM"))
+            f.close()
 
+    # Copies keys to the backup key dir in a folder named by their ID
     def backup(self):
         self.get_keys()
 
@@ -76,12 +76,12 @@ class Key_man:
         shutil.copy(self.private_key_path, "{}/private.pem".format(path))
 
 
-
-
+    # Gets all local ids and stores them in a list
     def get_ids(self):
         self.local_ids = os.listdir(self.backup_keys_dir)
         self.local_ids.sort()
 
+    # Print all passwords in the server matching the users local IDs
     def print_matched(self, server_ids):
         self.get_ids()
         self.get_keys()
@@ -104,7 +104,7 @@ class Key_man:
             pos += 1
                 
         
-
+    # Rolls the user back to a chosen backed up ID
     def rollback(self, server_ids):
         self.print_matched(server_ids)
 
