@@ -1,0 +1,8 @@
+Buttons:
+- Up
+- Down
+- Select
+
+Other:
+- LCD Display
+- USB male

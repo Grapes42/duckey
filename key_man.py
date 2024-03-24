@@ -18,11 +18,12 @@ class Key_man:
         self.backup_keys_dir = backup_keys_dir
 
         self.local_ids = []
+        self.matched_ids = []
 
         # If there is an empty or invalid key structure, backup and generate keys
-        if (not os.path.exists("{}/id.txt".format(keys_dir)) 
-            or not os.path.exists("{}/public.txt".format(keys_dir)) 
-            or not os.path.exists("{}/private.txt".format(keys_dir))
+        if (not os.path.exists(self.id_path) 
+            or not os.path.exists(self.public_key_path) 
+            or not os.path.exists(self.private_key_path)
             ):
             self.generate()
             time.sleep(1)
@@ -86,13 +87,13 @@ class Key_man:
         self.get_ids()
         self.get_keys()
 
-        matched_ids = []
+        self.matched_ids = []
 
         print("Passwords stored in the server that you own: ")
         for id in server_ids:
             id_stripped = id.split("-", 1)[0]
             if id_stripped in self.local_ids:
-                matched_ids.append(id)
+                self.matched_ids.append(id)
 
                 id_pass = id.split(".", 1)[0]
                 print(id_pass)
