@@ -57,7 +57,6 @@ class Key_man:
             f.close()
 
         # Generates a ID based off the first 10 chars of the public key
-        print(str(generated_public_key))
         generated_id = str(generated_public_key)[10:20]
         
         with open(self.id_path, "w") as f:
