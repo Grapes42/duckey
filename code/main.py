@@ -2,7 +2,7 @@ from server import Server
 from key_man import Key_man
 from string_operations import get_part
 
-server = Server("ilovemyholly.ddns.net", "pass_man", "6arleyhuman")
+server = Server("duckey.ddns.net", "duckey", "quack")
 key_man = Key_man("keys", "backup_keys")
 
 options = """0. Exit

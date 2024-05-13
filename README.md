@@ -26,5 +26,5 @@ This way, there is no need to install any program on the host, which means it wo
 ## Hardware
 Duckey currently runs on a Raspberry Pi Zero with a custom PCB, in the future I would like to design a more specialised device to decrease price.
 
-It features 3 buttons: up, down and select, to navigate the menu on its LCD display, which will allow you to intuitively use 
+It features 3 buttons: up, down and select, to navigate the menu on its LCD display, which will allow you to intuitively use the devices functions.
  
