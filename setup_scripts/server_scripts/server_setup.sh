@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #
 # Server side Duckey setup script
 #
@@ -14,6 +16,7 @@ else
   # Add user
   groupadd sftponly # add sftp only group
   useradd -g sftponly -s /bin/false -m -d /home/duckey duckey # add new user, and add them to sftponly
+  sleep 1
   echo -e "quack\nquack" | passwd duckey # set password for new user
 
   # Make root own the user's directories
@@ -30,14 +33,16 @@ else
   #
 
   echo "
-  # Added by Duckey setup script
-  Subsystem sftp internal-sftp
-  Match Group sftponly
-    ChrootDirectory %h
-    ForceCommand internal-sftp
-    AllowTcpForwarding no
-    X11Forwarding no
-    " >> /etc/ssh/sshd_config
+# Added by Duckey setup script
+Subsystem sftp internal-sftp
+Match Group sftponly
+  ChrootDirectory %h
+  ForceCommand internal-sftp
+  AllowTcpForwarding no
+  X11Forwarding no
+" >> /etc/ssh/sshd_config
+	
+  sleep 1
 
   systemctl restart ssh
 

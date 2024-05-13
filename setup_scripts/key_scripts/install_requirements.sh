@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [ "$EUID" -ne 0 ]; then
 	echo "Please run this program as root by typing \"sudo ./install_requirements.sh\""
 	exit
