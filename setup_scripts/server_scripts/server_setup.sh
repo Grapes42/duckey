@@ -29,13 +29,15 @@ else
   # Configuring SSH
   #
 
-  echo "# Added by Duckey setup script
+  echo "
+  # Added by Duckey setup script
   Subsystem sftp internal-sftp
   Match Group sftponly
     ChrootDirectory %h
     ForceCommand internal-sftp
     AllowTcpForwarding no
-    X11Forwarding no" >> /etc/ssh/sshd_config
+    X11Forwarding no
+    " >> /etc/ssh/sshd_config
 
   systemctl restart ssh
 
