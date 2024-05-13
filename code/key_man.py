@@ -45,13 +45,6 @@ class Key_man:
         if not os.path.exists(self.keys_dir):
             os.makedirs(self.keys_dir)
 
-        # Generates a ID based off the unix timestamp
-        generated_id = str( int( (datetime.now() - datetime(1970, 1, 1)).total_seconds()) )
-
-        with open(self.id_path, "w") as f:
-            f.write(generated_id)
-            f.close
-
         # Generates a private and public key
         generated_public_key, generated_private_key = rsa.newkeys(1024)
 
@@ -62,6 +55,13 @@ class Key_man:
         with open(self.private_key_path, "wb") as f:
             f.write(generated_private_key.save_pkcs1("PEM"))
             f.close()
+
+        # Generates a ID based off the first 10 chars of the public key
+        print(str(generated_public_key))
+        generated_id = str(generated_public_key)[10:20]
+        
+        with open(self.id_path, "w") as f:
+            f.write(generated_id)
 
     # Copies keys to the backup key dir in a folder named by their ID
     def backup(self):
