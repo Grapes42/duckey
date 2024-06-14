@@ -13,7 +13,7 @@ def search(field, list):
         if txt in item:
             searched.append(item)
 
-    list_items = tk.Variable(value=searched)
+    list_items.set(searched)
     
     print(searched)
 
@@ -63,7 +63,7 @@ root.attributes('-topmost', 1)
 # initial vars
 options = ["cat", "mouse", "dog", "bird"]
 searched = []
-list_items = tk.Variable(value=searched)
+list_items = tk.StringVar(value=searched)
 
 
 header = ttk.Label(root, text="Search")
