@@ -1,9 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
+import pyperclip
 
 
 def search(field, list):
-    global listbox
 
     txt = field.get(1.0, "end-1c")
 
@@ -17,13 +17,6 @@ def search(field, list):
     
     print(searched)
 
-    listbox = tk.Listbox(
-        root,
-        height = 10,
-        width = 10,
-        listvariable=list_items
-    )
-
     root.update()
     root.update_idletasks()
 
@@ -31,7 +24,8 @@ def run_search():
     search(field=search_input, list=options)
     root.after(100, run_search)
 
-
+def copy_pass():
+    selected_indices = listbox.curselection()
 
 
 root = tk.Tk()
@@ -61,20 +55,32 @@ root.attributes('-topmost', 1)
 #
 
 # initial vars
-options = ["cat", "mouse", "dog", "bird"]
+options = ["cat", "mouse", "dog", "bird", "car", "rabbit"]
 searched = []
 list_items = tk.StringVar(value=searched)
 
 
 header = ttk.Label(root, text="Search")
 
-search_input = tk.Text(root, height = 1, width = 20)
+search_input = tk.Text(root, height = 1, width = 30)
 
+listbox = tk.Listbox(
+        root,
+        height = 10,
+        width = 30,
+        listvariable=list_items
+    )
 
 run_search() # runs every 1000ms
 
-header.grid(row = 0, column = 0, pady = 2, padx = 2)
-search_input.grid(row = 1, column = 0, pady = 2, padx = 2)
-listbox.grid(row = 2, column = 0, pady = 2, padx = 2)
+copy_pass = ttk.Button(root, text="Copy Password")
+copy_user = ttk.Button(root, text="Copy Username", command=)
+
+header.grid(row=0, column=0, pady=2, padx=2)
+search_input.grid(row=1, column=0, pady=2, padx=2)
+listbox.grid(row=2, column=0, pady=2, padx=2)
+
+copy_pass.grid(row=3, column=0, pady=2, padx=2, sticky=tk.W)
+copy_user.grid(row=3, column=0, pady=2, padx=2, sticky=tk.E)
 
 root.mainloop()
