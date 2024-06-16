@@ -15,7 +15,7 @@ def search(field, list):
 
     list_items.set(searched)
     
-    print(searched)
+    #print(searched)
 
     root.update()
     root.update_idletasks()
@@ -25,7 +25,10 @@ def run_search():
     root.after(100, run_search)
 
 def copy_pass():
-    selected_indices = listbox.curselection()
+    tuple = listbox.curselection()
+    index = tuple[0]
+    print(searched[index])
+    pyperclip.copy(searched[index])
 
 
 root = tk.Tk()
@@ -56,7 +59,7 @@ root.attributes('-topmost', 1)
 
 # initial vars
 options = ["cat", "mouse", "dog", "bird", "car", "rabbit"]
-searched = []
+searched = options
 list_items = tk.StringVar(value=searched)
 
 
@@ -73,8 +76,8 @@ listbox = tk.Listbox(
 
 run_search() # runs every 1000ms
 
-copy_pass = ttk.Button(root, text="Copy Password")
-copy_user = ttk.Button(root, text="Copy Username", command=)
+copy_pass = ttk.Button(root, text="Copy Password", command=copy_pass)
+copy_user = ttk.Button(root, text="Copy Username")
 
 header.grid(row=0, column=0, pady=2, padx=2)
 search_input.grid(row=1, column=0, pady=2, padx=2)
