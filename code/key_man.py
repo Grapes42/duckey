@@ -82,13 +82,12 @@ class Key_man:
         self.local_ids.sort()
 
     # Print all passwords in the server matching the users local IDs
-    def print_matched(self, server_ids):
+    def get_matched(self, server_ids):
         self.get_ids()
         self.get_keys()
 
         self.matched_ids = []
 
-        print("Passwords stored in the server that you own: ")
         for id in server_ids:
             id_stripped = id.split("-", 1)[0]
             if id_stripped in self.local_ids:
@@ -96,12 +95,6 @@ class Key_man:
 
                 id_pass = id.split(".", 1)[0]
                 print(id_pass)
-
-        print("\nLocal IDs: ")
-        pos = 1
-        for id in self.local_ids:
-            print("{}. {}".format(pos, id))
-            pos += 1
                 
         
     # Rolls the user back to a chosen backed up ID

@@ -42,13 +42,10 @@ class Server:
             f.close()
 
     # Add a encrypted password in the server
-    def add_pass(self, id, public_key):
-        pass_name = input("Enter password name: ")
-        password = input("Enter password: ")
-
+    def add_pass(self, id, public_key, pass_name, password):
         path = "{}-{}.txt".format(id, pass_name)
 
-        self.encrypt(path, public_key, password)
+        self.encrypt(path=path, public_key=public_key, password=password)
 
         self.put(path)
 
