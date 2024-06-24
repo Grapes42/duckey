@@ -1,12 +1,16 @@
 import tkinter as tk
 from tkinter import ttk
 
+from server import Server
+from key_man import Key_man
+
+server = Server("duckey.ddns.net", "duckey", "quack")
+key_man = Key_man("keys", "backup_keys")
+
 class AddPass:
-    def __init__(self, frame, key_man_object, server_object):
+    def __init__(self, frame):
         self.frame = frame        
 
-        self.key_man = key_man_object
-        self.server = server_object
     def construct(self):
         #
         # Root content
@@ -43,10 +47,10 @@ class AddPass:
         print(pass_name)
         print(password)
 
-        self.key_man.get_keys()
+        key_man.get_keys()
 
-        self.server.add_pass(id=self.key_man.id, 
-                        public_key=self.key_man.public_key,
+        server.add_pass(id=key_man.id, 
+                        public_key=key_man.public_key,
                         pass_name=pass_name,
                         password=password)
 

@@ -4,12 +4,6 @@ from tkinter import ttk
 from pages.get_pass import GetPass
 from pages.add_pass import AddPass
 
-from server import Server
-from key_man import Key_man
-
-server = Server("duckey.ddns.net", "duckey", "quack")
-key_man = Key_man("keys", "backup_keys")
-
 def clear():
     for widget in app_frame.winfo_children():
         widget.destroy()
@@ -63,8 +57,8 @@ add_pass_change.grid(row=1)
 
 
 # Defining window objects
-get_pass = GetPass(frame=app_frame, key_man_object=key_man, server_object=server)
-add_pass = AddPass(frame=app_frame, key_man_object=key_man, server_object=server)
+get_pass = GetPass(frame=app_frame)
+add_pass = AddPass(frame=app_frame)
 
 
 root.grid_columnconfigure(0, weight=1)

@@ -2,27 +2,34 @@ import tkinter as tk
 from tkinter import ttk
 import pyperclip
 
+from server import Server
+from key_man import Key_man
+
+server = Server("duckey.ddns.net", "duckey", "quack")
+key_man = Key_man("keys", "backup_keys")
+
 class GetPass:
-    def __init__(self, frame, key_man_object, server_object):
+    def __init__(self, frame):
         self.frame = frame        
 
-        self.key_man = key_man_object
-        self.server = server_object
     def construct(self):
-        self.server.get_ids()
-        self.key_man.get_matched(self.server.ids)
+        server.get_ids()
+        key_man.get_matched(server.ids)
 
-        self.options = self.key_man.matched_ids
+        self.options = key_man.matched_ids
 
         self.pretty_options = []
         
         for option in self.options:
-            prettied = option.split("-", 1)[0]
+            split = option.split("-", 1)[1]
+            prettied = split.split(".", 1)[0]
             self.pretty_options.append(prettied)
+            print(prettied)
 
-
-
-        self.searched = self.pretty_options
+        self.searched = [] 
+        for option in self.pretty_options:
+            self.searched.append(option)
+            print(option)
         
         self.list_items = tk.StringVar(value=self.searched)
 
@@ -71,7 +78,7 @@ class GetPass:
         self.frame.update_idletasks()
 
     def run_search(self):
-        self.search(field=self.search_input, list=self.options)
+        self.search(field=self.search_input, list=self.pretty_options)
         self.frame.after(100, self.run_search)
 
     def copy_pass(self):
