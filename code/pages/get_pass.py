@@ -2,21 +2,15 @@ import tkinter as tk
 from tkinter import ttk
 import pyperclip
 
-from server import Server
-from key_man import Key_man
-
-server = Server("duckey.ddns.net", "duckey", "quack")
-key_man = Key_man("keys", "backup_keys")
+from encryption import Encryption
+enc = Encryption(host="duckey.ddns.net", username="duckey", password="quack")
 
 class GetPass:
     def __init__(self, frame):
         self.frame = frame        
 
     def construct(self):
-        server.get_ids()
-        key_man.get_matched(server.ids)
-
-        self.options = key_man.matched_ids
+        self.options = enc.list_passwords()
 
         self.pretty_options = []
         
@@ -84,5 +78,5 @@ class GetPass:
     def copy_pass(self):
         tuple = self.listbox.curselection()
         index = tuple[0]
-        print(self.searched[index])
-        pyperclip.copy(self.searched[index])
+
+        enc.get_and_decrypt(self.searched[index])
